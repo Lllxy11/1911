@@ -9,7 +9,7 @@ def index():
 @app.route("/main", methods=["GET", "POST"])
 def main():
     if request.method == "POST":
-        r = request.form.get("name")
+        r = request.form.get("r")
         return render_template("main.html", r=r)
     else:
         # Handle GET request here if needed
