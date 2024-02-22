@@ -1,13 +1,11 @@
 from flask import Flask, request, render_template
-from openai import OpenAI
 import replicate
 import os
 import time
+from openai import OpenAI
 
+model = OpenAI(api_key="sess-QJbVC96XEyR4YEKR5yj0Ga0kWGF6SOMR1YTmiVqH")
 os.environ["REPLICATE_API_TOKEN"]="r8_YCkY5TTYO4H6Vu2IH9Navg8JezCJBqx3sDOM1"
-openai_api_key = os.getenv("OPENAI_API_KEY")
-
-model = OpenAI(api_key=openai_api_key)
 
 app = Flask(__name__)
 
@@ -50,17 +48,30 @@ def text_gpt():
 def text_result():
     q = request.form.get("q")
     r = model.chat.completions.create(
-        model = "gpt-3.5-turbo",
-        messages=[
-            {
-                "role" : "user",
-                "content" : q
-            }
-        ]
+      model = "gpt-3.5-turbo",
+      messages=[
+        {
+        "role" : "user",
+        "content" : q
+        }
+      ]
     )
-    time.sleep(5)
-    return(render_template("text_result.html",r=r.choices[0].message.content))
-   
+     time.sleep(5)
+     return(render_template("text_result.html",r=r.choices[0].message.content))
+     
+@app.route("/about_ntu", methods=["GET", "POST"])
+def about_ntu():
+    return render_template("about_ntu.html")
+
+@app.route("/image_ntu", methods=["GET", "POST"])
+def about_ntu():
+    return render_template("image_ntu.html")
+
+@app.route("/text_ntu", methods=["GET", "POST"])
+def about_ntu():
+    return render_template("text_ntu.html")
+
+
 @app.route("/end", methods=["GET", "POST"])
 def end():
     global first_time
