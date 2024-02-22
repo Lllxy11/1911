@@ -76,8 +76,9 @@ def text_ntu():
 @app.route("/end", methods=["GET", "POST"])
 def end():
     global first_time
+    name = session.get('name', '') 
     first_time = 1
-    return render_template("end.html")
+    return render_template("end.html", name=name)
 
 if __name__ == "__main__":
     app.run()
