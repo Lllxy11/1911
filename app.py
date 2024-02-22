@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template
+from openai import OpenAI
 import replicate
 import os
 import time
-from openai import OpenAI
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
 os.environ["REPLICATE_API_TOKEN"]="r8_YCkY5TTYO4H6Vu2IH9Navg8JezCJBqx3sDOM1"
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 model = OpenAI(api_key=openai_api_key)
 
