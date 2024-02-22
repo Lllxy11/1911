@@ -72,13 +72,10 @@ def image_ntu():
 def text_ntu():
     return render_template("text_ntu.html")
 
-
 @app.route("/end", methods=["GET", "POST"])
 def end():
-    global first_time
     name = session.get('name', '') 
-    first_time = 1
-    return render_template("end.html", name=name)
+    return render_template("end.html", r=name)
 
 if __name__ == "__main__":
     app.run()
