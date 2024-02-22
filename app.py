@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template
 import replicate
 import os
 import time
@@ -8,7 +8,6 @@ model = OpenAI(api_key="sess-QJbVC96XEyR4YEKR5yj0Ga0kWGF6SOMR1YTmiVqH")
 os.environ["REPLICATE_API_TOKEN"]="r8_YCkY5TTYO4H6Vu2IH9Navg8JezCJBqx3sDOM1"
 
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 r = ""
 first_time = 1
@@ -17,13 +16,13 @@ first_time = 1
 def index():
     return render_template("index.html")
 
-@app.route("/main", methods=["GET", "POST"])
+@app.route("/main",methods=["GET","POST"])
 def main():
-    global first_time
-    if first_time == 1:
-        session['name'] = request.form.get("r")
-        first_time = 0
-    return render_template("main.html", name=session.get('name', ''))
+    global r,first_time
+    if first_time==1:
+        r = request.form.get("r")
+        first_time=0
+    return(render_template("main.html",r=r))
 
 @app.route("/image_gpt", methods=["GET", "POST"])
 def image_gpt():
@@ -72,10 +71,11 @@ def image_ntu():
 def text_ntu():
     return render_template("text_ntu.html")
 
-@app.route("/end", methods=["GET", "POST"])
+@app.route("/end",methods=["GET","POST"])
 def end():
-    name = session.get('name', '')  
-    return render_template("end.html", r=name)
+    global first_time,r
+    first_time = 1
+    return(render_template("end.html",r=r))
 
 if __name__ == "__main__":
     app.run()
