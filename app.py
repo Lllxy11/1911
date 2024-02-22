@@ -64,11 +64,11 @@ def about_ntu():
     return render_template("about_ntu.html")
 
 @app.route("/image_ntu", methods=["GET", "POST"])
-def about_ntu():
+def image_ntu():
     return render_template("image_ntu.html")
 
 @app.route("/text_ntu", methods=["GET", "POST"])
-def about_ntu():
+def text_ntu():
     return render_template("text_ntu.html")
 
 
