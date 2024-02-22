@@ -4,7 +4,7 @@ import os
 import time
 from openai import OpenAI
 
-openai_api_key=os.environ["OpenAI_API_TOKEN"]="sess-QJbVC96XEyR4YEKR5yj0Ga0kWGF6SOMR1YTmiVqH"
+openai_api_key=os.environ["OpenAI_API_TOKEN"]
 os.environ["REPLICATE_API_TOKEN"]="r8_YCkY5TTYO4H6Vu2IH9Navg8JezCJBqx3sDOM1"
 model = OpenAI(api_key=openai_api_key)
 
@@ -47,18 +47,13 @@ def text_gpt():
      
 @app.route("/text_result", methods=["GET", "POST"])
 def text_result():
-    q = request.form.get("q")
+    q = input("question:")
     r = model.chat.completions.create(
       model = "gpt-3.5-turbo",
-      messages=[
-        {
-        "role" : "user",
-        "content" : q
-        }
-      ]
+      messages=[{"role" : "user","content" : q}]
     )
-     time.sleep(5)
-     return(render_template("text_result.html",r=r.choices[0].message.content))
+    time.sleep(5)
+    return(render_template("text_result.html",r=r.choices[0].message.content))
    
 @app.route("/end", methods=["GET", "POST"])
 def end():
