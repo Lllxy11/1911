@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 import replicate
 import os
 import time
@@ -8,6 +8,7 @@ model = OpenAI(api_key="sess-QJbVC96XEyR4YEKR5yj0Ga0kWGF6SOMR1YTmiVqH")
 os.environ["REPLICATE_API_TOKEN"]="r8_YCkY5TTYO4H6Vu2IH9Navg8JezCJBqx3sDOM1"
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 r = ""
 first_time = 1
@@ -18,11 +19,11 @@ def index():
 
 @app.route("/main", methods=["GET", "POST"])
 def main():
-    global r, first_time
+    global first_time
     if first_time == 1:
-        r = request.form.get("r")
+        session['name'] = request.form.get("r")
         first_time = 0
-    return render_template("main.html", r=r)
+    return render_template("main.html", name=session.get('name', ''))
 
 @app.route("/image_gpt", methods=["GET", "POST"])
 def image_gpt():
