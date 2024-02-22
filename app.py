@@ -19,8 +19,11 @@ def index():
 
 @app.route("/main", methods=["GET", "POST"])
 def main():
-    namene = session.get('name', '')  
-    return render_template("main.html", name=name)
+    global first_time
+    if first_time == 1:
+        session['name'] = request.form.get("r")
+        first_time = 0
+    return render_template("main.html", name=session.get('name', ''))
 
 @app.route("/image_gpt", methods=["GET", "POST"])
 def image_gpt():
@@ -69,10 +72,12 @@ def image_ntu():
 def text_ntu():
     return render_template("text_ntu.html")
 
+
 @app.route("/end", methods=["GET", "POST"])
 def end():
-    namene = session.get('name', '') 
-    return render_template("end.html", name=name)
+    global first_time
+    first_time = 1
+    return render_template("end.html")
 
 if __name__ == "__main__":
     app.run()
